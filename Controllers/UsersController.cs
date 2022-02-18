@@ -97,8 +97,12 @@ namespace Task3_5.Controllers
                 }
                 foreach (var u in usersId)
                 {
-                    await _signInManager.SignOutAsync();
-                    return RedirectToAction("Index", "Home");
+                    var user = await _userManager.FindByIdAsync(u);
+                    if (User.Identity.Name == user.UserName)
+                    {
+                        await _signInManager.SignOutAsync();
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             return RedirectToAction("Index");
