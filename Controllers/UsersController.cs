@@ -98,10 +98,13 @@ namespace Task3_5.Controllers
                 foreach (var u in usersId)
                 {
                     var user = await _userManager.FindByIdAsync(u);
-                    if (User.Identity.Name == user.UserName)
+                    if (user != null)
                     {
-                        await _signInManager.SignOutAsync();
-                        return RedirectToAction("Index", "Home");
+                        if (User.Identity.Name == user.UserName)
+                        {
+                            await _signInManager.SignOutAsync();
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                 }
             }
@@ -130,10 +133,13 @@ namespace Task3_5.Controllers
                 foreach (var u in usersId)
                 {
                     var user = await _userManager.FindByIdAsync(u);
-                    if (User.Identity.Name == user.UserName)
+                    if (user != null)
                     {
-                        await _signInManager.SignOutAsync();
-                        return RedirectToAction("Index", "Home");
+                        if (User.Identity.Name == user.UserName)
+                        {
+                            await _signInManager.SignOutAsync();
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                 }
             }
