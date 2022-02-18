@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<Task3_5.Models.User>
+
+<h2>User List</h2>
+<form asp-controller="Users">
+<table class="table" border="1">
+    <tr>
+        <th>
+            <input type="checkbox" id="check_all" onclick="CheckAll('chek', this)"> All
+        </th>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Date Register</th>
+    <th>Last Login</th>
+    <th>UnBlock</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+<tr>
+    <td><input type="checkbox" name="usersId" value="@user.Id" class="chek"></td>
+    <td>@Html.DisplayFor(mitem => user.Id)</td>
+    <td>@Html.DisplayFor(mitem => user.UserName)</td>
+    <td>@Html.DisplayFor(mitem => user.Email)</td>
+    <td>@Html.DisplayFor(mitem => user.DateRegister)</td>
+    <td>@Html.DisplayFor(mitem => user.LastLogin)</td>
+    <td>@Html.DisplayFor(mitem => user.Status)</td>
+    @*<td>
+        <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+            <a class="btn btn-sm btn-primary" asp-action="Banned" asp-route-id="@user.Id">Block</a>
+            <a class="btn btn-sm btn-primary" asp-action="unBanned" asp-route-id="@user.Id">unBlock</a>
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </td>*@
+</tr>
+    }
+</table>
+<div class="btn-toolbar">
+        <input class="btn btn-primary" type="submit" name="submit" value="Delete" formmethod="post" formaction="~/Users/Delete" />
+        <input class="btn btn-secondary" type="submit" name="submit" value="Block" formmethod="post" formaction="~/Users/Block" />
+        <input class="btn btn-success" type="submit" name="submit" value="Unblock" formmethod="post" formaction="~/Users/Unblock" />
+    </div>
+
+</form>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<script>function CheckAll(className, elem) {
+        var elements = document.getElementsByClassName(className);
+        var l = elements.length;
+
+        if (elem.checked)
+        {
+            for (var i = 0; i < l; i++) {
+                elements[i].checked = true;
+            }
+        }
+        else
+        {
+            for (var i = 0; i < l; i++) {
+                elements[i].checked = false;
+            }
+        }
+    }</script>
