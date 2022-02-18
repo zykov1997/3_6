@@ -83,18 +83,7 @@ namespace Task3_5.Controllers
         {
             if (usersId != null)
             {
-                foreach (var u in usersId)
-                {
-                    var user = await _userManager.FindByIdAsync(u);
-                    if (user != null)
-                    {
-                        await _userManager.DeleteAsync(user);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "User Not Found");
-                    }
-                }
+                var SignOut = false;
                 foreach (var u in usersId)
                 {
                     var user = await _userManager.FindByIdAsync(u);
@@ -102,10 +91,19 @@ namespace Task3_5.Controllers
                     {
                         if (User.Identity.Name == user.UserName)
                         {
-                            await _signInManager.SignOutAsync();
-                            return RedirectToAction("Index", "Home");
+                            SignOut = true;
                         }
+                        await _userManager.DeleteAsync(user);
                     }
+                    else
+                    {
+                        ModelState.AddModelError("", "User Not Found");
+                    }
+                }
+                if (SignOut == true)
+                {
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return RedirectToAction("Index");
